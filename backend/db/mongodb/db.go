@@ -5,6 +5,7 @@ import (
 	"errors"
 	"time"
 
+	"github.com/devflex-pro/tma-starter-kit/backend/config"
 	"github.com/devflex-pro/tma-starter-kit/backend/domain"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -18,11 +19,10 @@ type MongoUserDB struct {
 
 func New(
 	ctx context.Context,
-	uri,
-	dbName,
-	collectionName string,
+	conf config.MongoUserDBConfig,
 ) (*MongoUserDB, error) {
-	clientOpts := options.Client().ApplyURI(uri)
+	clientOpts := options.Client().
+		ApplyURI(conf.URI)
 
 	client, err := mongo.Connect(ctx, clientOpts)
 	if err != nil {
@@ -33,8 +33,8 @@ func New(
 		return nil, err
 	}
 
-	db := client.Database(dbName)
-	collection := db.Collection(collectionName)
+	db := client.Database(conf.DBName)
+	collection := db.Collection(conf.CollectionName)
 
 	indexModel := mongo.IndexModel{
 		Keys:    bson.M{"id": 1},

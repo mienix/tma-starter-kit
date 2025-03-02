@@ -9,6 +9,6 @@ var ErrUserNotFound = errors.New("user not found")
 
 type UserDB interface {
 	Save(context.Context, User) error
-	Read(context.Context, string) (User, error)
-	Close(context.Context)
+	Read(context.Context, int) (User, error)
+	Close(context.Context) error
 }

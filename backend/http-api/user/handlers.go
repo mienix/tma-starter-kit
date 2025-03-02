@@ -3,6 +3,7 @@ package http_api_user
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 	"strings"
 
 	"github.com/devflex-pro/tma-starter-kit/backend/domain"
@@ -32,7 +33,16 @@ func (h *UserHandler) Read(
 	}
 	id := parts[2]
 
-	user, err := h.db.Read(r.Context(), id)
+	parsedID, err := strconv.ParseInt(id, 10, 32)
+	if err != nil {
+		http.Error(
+			w,
+			"parsing user ID",
+			http.StatusBadRequest)
+		return
+	}
+
+	user, err := h.db.Read(r.Context(), int(parsedID))
 	if err != nil {
 		if err == domain.ErrUserNotFound {
 			http.Error(

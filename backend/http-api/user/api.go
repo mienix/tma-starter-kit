@@ -31,8 +31,8 @@ func New(
 
 func (api *API) Start(ctx context.Context) error {
 	ln, err := reuseport.Listen(
-		*api.conf.Network,
-		*api.conf.Addr)
+		api.conf.Network,
+		api.conf.Addr)
 	if err != nil {
 		return err
 	}
