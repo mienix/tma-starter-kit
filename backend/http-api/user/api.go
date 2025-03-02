@@ -23,6 +23,7 @@ func New(
 	RegisterRoutes(mux, db)
 
 	return &API{
+		conf: conf,
 		httpServer: &http.Server{
 			Handler: mux,
 		},

@@ -1,6 +1,8 @@
 package config
 
-import "os"
+import (
+	"os"
+)
 
 type HTTPServerConfig struct {
 	Network string `env:"NETWORK,required"`
