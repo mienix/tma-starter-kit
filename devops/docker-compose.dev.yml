@@ -1,0 +1,39 @@
+services:
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    ports:
+      - "9000:9000" 
+    volumes:
+      - ../frontend:/app
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - backend
+    command: npx quasar dev
+
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NETWORK=tcp4
+      - ADDR=:3000
+      - MONGODB_URI=mongodb://mongo:27017/myappdb
+      - MONGODB_NAME=myappdb
+      - MONGODB_COLLECTION_NAME=users
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
