@@ -11,6 +11,6 @@ func RegisterRoutes(
 	db domain.UserDB,
 ) {
 	h := NewUserHandler(db)
-	mux.HandleFunc("/users", h.Save)
-	mux.HandleFunc("/users/{id}", h.Read)
+	mux.HandleFunc("/api/users", h.Save)
+	mux.HandleFunc("/api/users/{id}", h.Read)
 }

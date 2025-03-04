@@ -1,5 +1,5 @@
 services:
-  frontend:
+  tma-frontend:
     build:
       context: ../frontend
       dockerfile: Dockerfile
@@ -10,10 +10,10 @@ services:
     environment:
       - NODE_ENV=development
     depends_on:
-      - backend
+      - tma-backend
     command: npx quasar dev
 
-  backend:
+  tma-backend:
     build:
       context: ../backend
       dockerfile: Dockerfile
@@ -22,13 +22,13 @@ services:
     environment:
       - NETWORK=tcp4
       - ADDR=:3000
-      - MONGODB_URI=mongodb://mongo:27017/myappdb
+      - MONGODB_URI=mongodb://tma-mongo:27017/myappdb
       - MONGODB_NAME=myappdb
       - MONGODB_COLLECTION_NAME=users
     depends_on:
-      - mongo
+      - tma-mongo
 
-  mongo:
+  tma-mongo:
     image: mongo:latest
     ports:
       - "27017:27017"
