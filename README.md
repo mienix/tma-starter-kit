@@ -1,4 +1,4 @@
-# TMA Starter Kit
+# TMA (Telegram Mini Apps) Starter Kit
 
 TMA Starter Kit is a developer-friendly template for building **Telegram Mini Apps**. It provides a ready-to-use foundation with a modern tech stack, allowing developers to focus on business logic rather than project setup.
 
@@ -34,7 +34,7 @@ TMA-Starter-Kit/
 ### Installation
 Clone the repository:
 ```sh
- git clone https://github.com/your-repo/tma-starter-kit.git
+ git clone https://github.com/devflex-pro/tma-starter-kit.git
  cd tma-starter-kit
 ```
 
