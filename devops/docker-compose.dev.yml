@@ -25,6 +25,7 @@ services:
       - MONGODB_URI=mongodb://tma-mongo:27017/myappdb
       - MONGODB_NAME=myappdb
       - MONGODB_COLLECTION_NAME=users
+      - TG_BOT_TOKEN=8018897015:AAG_HdhmMgZoDN1WyDdNyjEsB2-UfwfY1Rk
     depends_on:
       - tma-mongo
 

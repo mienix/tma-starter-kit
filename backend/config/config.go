@@ -5,13 +5,15 @@ import (
 )
 
 type HTTPServerConfig struct {
-	Network string `env:"NETWORK,required"`
-	Addr    string `env:"ADDR,required"`
+	Network  string `env:"NETWORK,required"`
+	Addr     string `env:"ADDR,required"`
+	BotToken string `env:"TG_BOT_TOKEN,required"`
 }
 
 func (httpConf *HTTPServerConfig) Load() {
 	httpConf.Network = os.Getenv("NETWORK")
 	httpConf.Addr = os.Getenv("ADDR")
+	httpConf.BotToken = os.Getenv("TG_BOT_TOKEN")
 }
 
 type MongoUserDBConfig struct {
