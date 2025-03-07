@@ -31,9 +31,14 @@ export const api = {
 };
 
 function getHeaders(): HeadersInit {
-  return {
-    'Content-Type': 'application/json'
+  const headers: { [key: string]: string } = {
+    'Content-Type': 'application/json',
   };
+  const initData: string = window.Telegram?.WebApp?.initData || '';
+  if (initData) {
+    headers['X-Telegram-Init-Data'] = initData;
+  }
+  return headers;
 }
 
 async function handleResponse<T>(response: Response): Promise<T> {
@@ -44,7 +49,7 @@ async function handleResponse<T>(response: Response): Promise<T> {
 
   const contentType = response.headers.get("content-type");
   if (!contentType || !contentType.includes("application/json")) {
-    return null as T; 
+    return null as T;
   }
 
   return response.json();
