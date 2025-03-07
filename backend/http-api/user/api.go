@@ -20,7 +20,7 @@ func New(
 ) *API {
 
 	mux := http.NewServeMux()
-	RegisterRoutes(mux, db)
+	RegisterRoutes(mux, db, conf.BotToken)
 
 	return &API{
 		conf: conf,
