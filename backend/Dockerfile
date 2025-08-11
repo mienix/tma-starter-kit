@@ -1,14 +1,12 @@
-FROM golang:alpine as build 
+FROM golang:1.22-alpine as build
 RUN apk add --no-cache ca-certificates
 
-WORKDIR /go/src/github.com/devflex-pro/tma-starter-kit/backend
-ADD . .
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
-  go build -ldflags '-extldflags "-static"' -o app ./cmd/user-api/main.go 
+WORKDIR /src
+COPY . .
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags '-s -w -extldflags "-static"' -o app ./cmd/user-api/main.go
 
-FROM scratch
-COPY --from=build /etc/ssl/certs/ca-certificates.crt \
-  /etc/ssl/certs/ca-certificates.crt
-COPY --from=build /go/src/github.com/devflex-pro/tma-starter-kit/backend/app /app
-
+FROM gcr.io/distroless/static:nonroot
+COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+COPY --from=build /src/app /app
+USER 65532:65532
 ENTRYPOINT ["/app"]

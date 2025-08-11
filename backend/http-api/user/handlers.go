@@ -23,15 +23,15 @@ func (h *UserHandler) Read(
 	w http.ResponseWriter,
 	r *http.Request,
 ) {
-	parts := strings.Split(r.URL.Path, "/")
-	if len(parts) < 3 || parts[2] == "" {
+    parts := strings.Split(r.URL.Path, "/")
+    if len(parts) < 2 {
 		http.Error(
 			w,
 			"missing user ID",
 			http.StatusBadRequest)
 		return
 	}
-	id := parts[2]
+    id := parts[len(parts)-1]
 
 	parsedID, err := strconv.ParseInt(id, 10, 32)
 	if err != nil {

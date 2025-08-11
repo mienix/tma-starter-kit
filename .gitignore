@@ -1,1 +1,25 @@
-frontend/node_modules
+# Node & frontend artifacts
+node_modules/
+frontend/node_modules/
+frontend/.quasar/
+frontend/dist/
+
+# Go build artifacts
+backend/bin/
+
+# Env files (keep tracked sample files under devops)
+.env
+.env.*
+!.env.example
+
+# Editor/OS
+.DS_Store
+.idea/
+.vscode/
+
+# Logs & coverage
+*.log
+coverage/
+
+# Docker
+**/mongo-data/

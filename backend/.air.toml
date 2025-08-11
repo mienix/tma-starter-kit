@@ -1,0 +1,14 @@
+root = "."
+tmp_dir = "tmp"
+
+[build]
+cmd = "go build -o bin/user-api ./cmd/user-api/main.go"
+bin = "bin/user-api"
+full_bin = "${bin}"
+include_ext = ["go"]
+exclude_dir = ["tmp", "bin", "vendor"]
+
+[log]
+color = true
+timestamp = false
+

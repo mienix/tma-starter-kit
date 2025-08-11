@@ -1,36 +1,42 @@
 services:
   tma-frontend:
-    build:
-      context: ../frontend
-      dockerfile: Dockerfile
+    image: node:20-alpine
+    working_dir: /app
     ports:
-      - "9000:9000" 
+      - "9000:9000"
+    environment:
+      BACKEND_URL: http://tma-backend:3000
+      NODE_ENV: development
+      CHOKIDAR_USEPOLLING: "1"
+      WATCHPACK_POLLING: "1"
     volumes:
       - ../frontend:/app
-    environment:
-      - NODE_ENV=production
+      - /app/node_modules
     depends_on:
       - tma-backend
-    command: npx quasar dev
+    command: sh -c "npm ci && npx quasar dev -p 9000 -H 0.0.0.0 --no-open"
 
   tma-backend:
-    build:
-      context: ../backend
-      dockerfile: Dockerfile
+    image: golang:1.22-alpine
+    working_dir: /app
     ports:
       - "3000:3000"
     environment:
-      - NETWORK=tcp4
-      - ADDR=:3000
-      - MONGODB_URI=mongodb://tma-mongo:27017/myappdb
-      - MONGODB_NAME=myappdb
-      - MONGODB_COLLECTION_NAME=users
-      - TG_BOT_TOKEN=8018897015:AAG_HdhmMgZoDN1WyDdNyjEsB2-UfwfY1Rk
+      NETWORK: tcp4
+      ADDR: :3000
+      MONGODB_URI: mongodb://tma-mongo:27017/myappdb
+      MONGODB_NAME: myappdb
+      MONGODB_COLLECTION_NAME: users
+      TG_BOT_TOKEN: dummy
+      BYPASS_TELEGRAM_AUTH: "true"
+    volumes:
+      - ../backend:/app
     depends_on:
       - tma-mongo
+    command: sh -c "go env -w GOPATH=/go && go install github.com/cosmtrek/air@latest && air -c .air.toml"
 
   tma-mongo:
-    image: mongo:latest
+    image: mongo:7
     ports:
       - "27017:27017"
     volumes:

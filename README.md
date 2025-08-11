@@ -38,13 +38,15 @@ Clone the repository:
  cd tma-starter-kit
 ```
 
-#### Run with Docker Compose
+#### Run with Docker Compose (Dev, hot-reload)
 ```sh
-docker compose -f devops/docker-compose.dev.yml up -d
+docker compose -f devops/docker-compose.dev.yml up -d --build
 ```
+Frontend: http://localhost:9000
+Backend API: http://localhost:3000
 #### Exposing the Application to the Internet
 
-Install LocalTunnel:
+Install LocalTunnel (optional, to expose locally):
 ```sh
 npm install -g localtunnel
 ```
@@ -80,6 +82,31 @@ To integrate your application as a **Telegram Web App**, follow these steps:
 - After registration, you will receive confirmation that the Web App has been created.
 
 Now your Telegram Web App is fully configured and ready to use! 🚀
+
+## Local development (Windows-friendly)
+
+1) Start dev stack (hot reload):
+```powershell
+docker compose -f devops/docker-compose.dev.yml up -d --build
+```
+
+2) Local without Docker:
+```powershell
+# Backend
+cd backend
+go mod download
+make build
+make run-api-local
+
+# Frontend
+cd ../frontend
+npm ci
+npm run dev
+```
+
+Notes:
+- In dev compose, backend runs with BYPASS_TELEGRAM_AUTH=true and TG_BOT_TOKEN=dummy.
+- Frontend proxies /api to backend; set BACKEND_URL to override.
 
 ## Contribution
 Contributions are welcome! Feel free to submit a PR or open an issue.

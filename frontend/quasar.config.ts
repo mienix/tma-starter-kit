@@ -82,8 +82,9 @@ export default defineConfig((/* ctx */) => {
       open: true, // opens browser window automatically
       proxy: {
         '/api': {
-          target: 'http://tma-backend:3000',
+          target: process.env.BACKEND_URL || 'http://localhost:3000',
           changeOrigin: true,
+          rewrite: (path: string) => path,
         },
       },
     },

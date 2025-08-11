@@ -11,12 +11,12 @@ export const userService = {
     }
   },
 
-  async getUserMeta(userId: string): Promise<UserMeta | null> {
+  async getUser(userId: number): Promise<User | null> {
     try {
-      const response = await api.get<UserMeta>(`/api/users/${userId}/meta`);
+      const response = await api.get<User>(`/api/users/${userId}`);
       return response;
     } catch (error) {
-      console.error('Ошибка при получении метаинформации:', error);
+      console.error('Ошибка при получении пользователя:', error);
       return null;
     }
   }
